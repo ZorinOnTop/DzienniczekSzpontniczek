@@ -22,7 +22,15 @@ class SessionStorage(
     private val credentialKey = stringPreferencesKey("session_credential")
     private val accountsKey = stringPreferencesKey("session_accounts")
 
-    suspend fun save(apiType: String, credential: RsaCredential, accounts: List<Account>) {
+    suspend fun save(
+        apiType: String,
+        credential: RsaCredential,
+        accounts: List<Account>,
+        pLogin: String? = null,
+        pPassword: String? = null,
+        pTenant: String? = null
+    ) {
+
         val stored = StoredCredential(
             apiType = apiType,
             type = credential.type,
@@ -33,7 +41,10 @@ class SessionStorage(
             notificationToken = credential.notificationToken,
             deviceId = credential.deviceId,
             deviceOs = credential.deviceOs,
-            deviceModel = credential.deviceModel
+            deviceModel = credential.deviceModel,
+            prometheusLogin = pLogin,
+            prometheusPassword = pPassword,
+            prometheusTenant = pTenant
         )
         dataStore.edit { prefs ->
             prefs[credentialKey] = json.encodeToString(stored)
@@ -64,6 +75,19 @@ class SessionStorage(
                 else -> SzpontHebeApi(credential, httpClient)
             }
             session.setup(api, accounts)
+            
+            if (stored.prometheusLogin != null && stored.prometheusPassword != null && stored.prometheusTenant != null) {
+                session.prometheusMessagesApi = io.github.szpontium.api.prometheus.PrometheusMessagesApi(
+                    tenant = stored.prometheusTenant,
+                    login = stored.prometheusLogin,
+                    password = stored.prometheusPassword,
+                    initialCookies = null
+                )
+            } else if (stored.apiType == "hebe_ce") {
+                // Stara sesja bez zapisanych danych - wymuś ponowne logowanie
+                return false
+            }
+            
             true
         } catch (e: Exception) {
             false

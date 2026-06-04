@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Announcement
 import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material.icons.outlined.EmojiEvents
+
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
@@ -43,6 +44,12 @@ fun MoreScreen(onNavigate: (Route) -> Unit) {
             icon = Icons.AutoMirrored.Outlined.Announcement,
             title = "Ogłoszenia",
             onClick = { onNavigate(Route.Announcements) }
+        )
+        Spacer(Modifier.height(12.dp))
+        MoreItem(
+            icon = Icons.Outlined.Person,
+            title = "Wiadomości",
+            onClick = { onNavigate(Route.Messages) }
         )
         Spacer(Modifier.height(12.dp))
         MoreItem(

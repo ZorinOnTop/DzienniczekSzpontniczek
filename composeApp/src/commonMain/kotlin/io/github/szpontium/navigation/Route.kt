@@ -37,5 +37,11 @@ sealed interface Route : NavKey {
     data object Announcements : Route
 
     @Serializable
+    data object Messages : Route
+
+    @Serializable
     data object Account : Route
+
+    @Serializable
+    data class MessageDetails(val id: String, val isHebe: Boolean, val hebeContent: String? = null) : Route
 }

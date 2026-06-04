@@ -60,7 +60,20 @@ class LoginViewModel(
 
                 val accounts = api.getAccounts()
                 session.setup(api, accounts)
-                sessionStorage.save("hebe_ce", credential, accounts)
+                session.prometheusMessagesApi = io.github.szpontium.api.prometheus.PrometheusMessagesApi(
+                    tenant = tenant,
+                    login = login,
+                    password = password,
+                    initialCookies = result.cookies
+                )
+                sessionStorage.save(
+                    apiType = "hebe_ce", 
+                    credential = credential, 
+                    accounts = accounts,
+                    pLogin = login,
+                    pPassword = password,
+                    pTenant = tenant
+                )
                 _events.send(LoginEvent.Success)
             } catch (e: Exception) {
                 e.printStackTrace()

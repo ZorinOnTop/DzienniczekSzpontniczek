@@ -10,6 +10,7 @@ import io.github.szpontium.viewmodel.ExamsViewModel
 import io.github.szpontium.viewmodel.GradesViewModel
 import io.github.szpontium.viewmodel.HomeworkViewModel
 import io.github.szpontium.viewmodel.LoginViewModel
+import io.github.szpontium.viewmodel.MessageDetailsViewModel
 import io.github.szpontium.viewmodel.NotesViewModel
 import io.github.szpontium.viewmodel.StartViewModel
 import io.github.szpontium.viewmodel.TimetableViewModel
@@ -30,5 +31,7 @@ val appModule = module {
     viewModel { HomeworkViewModel(get()) }
     viewModel { NotesViewModel(get()) }
     viewModel { AnnouncementsViewModel(get()) }
+    viewModel { io.github.szpontium.viewmodel.MessagesViewModel(get()) }
+    viewModel { MessageDetailsViewModel(get()) }
     viewModel { StartViewModel(get()) }
 }

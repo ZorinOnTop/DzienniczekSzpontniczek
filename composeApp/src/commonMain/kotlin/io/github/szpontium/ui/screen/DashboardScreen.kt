@@ -142,7 +142,7 @@ fun DashboardScreen(
                             )
                         },
                         label = { Text(tab.label) },
-                        selected = currentRoute == tab.route || (tab.route == Route.More && currentRoute in listOf(Route.Notes, Route.Announcements, Route.Account, Route.Homework)),
+                        selected = currentRoute == tab.route || (tab.route == Route.More && currentRoute in listOf(Route.Notes, Route.Announcements, Route.Account, Route.Homework, Route.Messages) || (currentRoute is Route.MessageDetails && tab.route == Route.More)),
                         onClick = {
                             if (currentRoute != tab.route) {
                                 backStack.clear()
@@ -176,6 +176,8 @@ fun DashboardScreen(
                 entry<Route.More> { MoreScreen(onNavigate = { backStack.add(it) }) }
                 entry<Route.Notes> { NotesScreen() }
                 entry<Route.Announcements> { AnnouncementsScreen() }
+                entry<Route.Messages> { MessagesScreen(onNavigate = { backStack.add(it) }) }
+                entry<Route.MessageDetails> { MessageDetailsScreen(route = it, onBack = { backStack.removeLastOrNull() }) }
                 entry<Route.Account> { AccountScreen(onLogout = onLogout) }
             }
         )

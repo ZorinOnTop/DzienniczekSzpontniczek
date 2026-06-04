@@ -506,6 +506,54 @@ open class SzpontApi(
         return szpontJson.decodeFromJsonElement(envelope!!)
     }
 
+    suspend fun getSentMessages(
+        restUrl: String,
+        box: String,
+        pupilId: Int,
+        lastId: Int = INT_MIN,
+        pageSize: Int = DEFAULT_PAGE_SIZE,
+        lastSyncDate: LocalDateTime = EPOCH_START_DATETIME
+    ): List<Message> {
+        val envelope = szpontHttpClient.request(
+            method = "GET",
+            restUrl = restUrl,
+            endpoint = "mobile/messages/sent/byBox",
+            query = mapOf(
+                "box" to box,
+                "pupilId" to pupilId,
+                "lastId" to lastId,
+                "pageSize" to pageSize,
+                "lastSyncDate" to lastSyncDate
+            ),
+            pupilId = pupilId
+        )
+        return szpontJson.decodeFromJsonElement(envelope!!)
+    }
+
+    suspend fun getDeletedMessages(
+        restUrl: String,
+        box: String,
+        pupilId: Int,
+        lastId: Int = INT_MIN,
+        pageSize: Int = DEFAULT_PAGE_SIZE,
+        lastSyncDate: LocalDateTime = EPOCH_START_DATETIME
+    ): List<Message> {
+        val envelope = szpontHttpClient.request(
+            method = "GET",
+            restUrl = restUrl,
+            endpoint = "mobile/messages/deleted/byBox",
+            query = mapOf(
+                "box" to box,
+                "pupilId" to pupilId,
+                "lastId" to lastId,
+                "pageSize" to pageSize,
+                "lastSyncDate" to lastSyncDate
+            ),
+            pupilId = pupilId
+        )
+        return szpontJson.decodeFromJsonElement(envelope!!)
+    }
+
     suspend fun getSchedule(
         restUrl: String,
         pupilId: Int,

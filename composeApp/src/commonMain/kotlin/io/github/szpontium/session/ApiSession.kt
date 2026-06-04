@@ -7,6 +7,8 @@ class ApiSession {
     var api: SzpontApi? = null
     var accounts: List<Account> = emptyList()
     var selectedAccountIndex: Int = 0
+    var prometheusMessagesApi: io.github.szpontium.api.prometheus.PrometheusMessagesApi? = null
+    var prometheusMailboxKey: String? = null
 
     val currentAccount: Account?
         get() = accounts.getOrNull(selectedAccountIndex)

@@ -39,6 +39,8 @@ data class PrometheusLoginResult(
     val tenantTokens: Map<String, String>,
     /** Główny accessToken z pola AccessToken w /api/ap */
     val mainAccessToken: String,
+    /** Ciastka sesyjne */
+    val cookies: List<io.ktor.http.Cookie>
 )
 
 class PrometheusLoginHelper {
@@ -128,6 +130,7 @@ class PrometheusLoginHelper {
         return PrometheusLoginResult(
             tenantTokens = tenantTokens,
             mainAccessToken = apData.accessToken,
+            cookies = cookieStorage.get(io.ktor.http.Url("https://eduvulcan.pl"))
         )
     }
 

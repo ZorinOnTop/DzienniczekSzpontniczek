@@ -13,5 +13,8 @@ data class StoredCredential(
     val notificationToken: String?,
     val deviceId: String,
     val deviceOs: String,
-    val deviceModel: String
+    val deviceModel: String,
+    val prometheusLogin: String? = null,
+    val prometheusPassword: String? = null,
+    val prometheusTenant: String? = null
 )
